@@ -10,13 +10,15 @@ function Home() {
   const handleListButtonClick = () => {
     navigate("/lists");
   };
+
   return (
     <>
       <button onClick={handleAddButtonClick}>
-        나만의 버킷리스트 추가하기 <HiArrowCircleRight />
+        나만의 버킷리스트 추가하기
+        <HiArrowCircleRight style={{ color: "green" }} />
       </button>
       <button onClick={handleListButtonClick}>
-        버킷리스트 모음 <HiArrowCircleRight />
+        버킷리스트 모음 <HiArrowCircleRight style={{ color: "green" }} />
       </button>
     </>
   );

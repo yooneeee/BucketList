@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addList } from "../../redux/modules/bucketlists";
+//import { addList } from "../../redux/modules/bucketlists";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
+import { addBucket } from "../../api/bucketlists";
+import axios from "axios";
+import { useMutation, useQueryClient } from "react-query";
 
 function Input() {
   const dispatch = useDispatch();
-  const bucketlists = useSelector((state) => state.bucketlists);
+  const queryClient = useQueryClient();
+  const mutation = useMutation(addBucket, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("bucketlists");
+    },
+  });
+
+  // const bucketlists = useSelector((state) => state.bucketlists);
 
   const [nickname, onChangeNicknameHandler, setNickname] = useInput("");
   const [title, onChangeTitleHandler, setTitle] = useInput("");
@@ -34,7 +44,7 @@ function Input() {
     // submit의 고유 기능인, 새로고침(refresh)을 막아주는 역함
     event.preventDefault();
 
-    // 닉네임과 제목, 내용이 모두 존재해야만 정상처리(하나라도 없는 경우 오류 발생)
+    /* // 닉네임과 제목, 내용이 모두 존재해야만 정상처리(하나라도 없는 경우 오류 발생)
     // "01" : 필수 입력값 검증 실패 안내
     if (!title || !contents || !nickname) {
       return getErrorMsg("01", { title, contents, nickname });
@@ -48,9 +58,9 @@ function Input() {
     // "02" : 내용 중복 안내
     if (validationArr.length > 0) {
       return getErrorMsg("02", { title, contents });
-    }
+    } */
 
-    // 추가하려는 todo를 newTodo라는 객체로 세로 만듦
+    // 추가하려는 버킷를 newBucket이라는 객체로 새로 만듦
     const newBucket = {
       title,
       nickname,
@@ -58,11 +68,17 @@ function Input() {
       id: uuidv4(),
     };
 
-    // todo를 추가하는 reducer 호출
-    // 인자 : payload
-    dispatch(addList(newBucket));
+    mutation.mutate(newBucket);
+    //dispatch(addBucket(newBucket));
 
-    // state 두 개를 초기화
+    setNickname("");
+    setTitle("");
+    setContents("");
+  };
+
+  const onSubmitHandler = async (newBucket) => {
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/bucketlists`, newBucket);
+    alert("버킷리스트가 추가되었습니다!");
     setNickname("");
     setTitle("");
     setContents("");
@@ -126,3 +142,18 @@ function Input() {
   );
 }
 export default Input;
+
+{
+  /* <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          const newBucket = {
+            title,
+            nickname,
+            contents,
+          };
+          // 버튼 클릭시, input에 있는 값(state)을 이용하여 DB에 저장(POST 요청)
+          onSubmitHandler(newBucket);
+        }}
+      ></form> */
+}

@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteList } from "../../redux/modules/bucketlists";
+//import { deleteList } from "../../redux/modules/bucketlists";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { deleteBucket } from "../../api/bucketlists";
+import { useQueryClient, useMutation } from "react-query";
 
 function Bucket({ bucket }) {
   // 삭제 확인 용 메시지 관리
@@ -15,10 +18,22 @@ function Bucket({ bucket }) {
   //const handleSwitchButton = () => dispatch(switchTodo(todo.id));
 
   // [삭제] 버튼 선택 시 호출되는 함수(user의 confirmation 필요)
-  const handleDeleteButton = () => {
-    if (window.confirm(CONFIRM_MESSAGE)) dispatch(deleteList(bucket.id));
+  /*  const handleDeleteButton = () => {
+    if (window.confirm(CONFIRM_MESSAGE)) dispatch(deleteBucket(bucket.id));
   };
+   */
+  const queryClient = useQueryClient();
+  const mutation = useMutation(deleteBucket, {
+    onSuccess: () => {
+      navigate("/lists");
+      queryClient.invalidateQueries("bucketlists");
+    },
+  });
 
+  /*   const onDeleteButtonClickHandler = async (id) => {
+    await axios.delete(`http://localhost:4001/bucketlists/${id}`);
+  };
+ */
   // [상세보기]를 선택하는 경우 이동하는 함수
   const handleDetailPageLinkClick = () => {
     navigate(`/lists/${bucket.id}`);
@@ -36,11 +51,17 @@ function Bucket({ bucket }) {
       <div height={10} />
       <p>작성자: {bucket.nickname}</p>
       <div height={20} />
+      {console.log(bucket.id)}
       <div>
-        {/*         <TodoButton onClick={handleSwitchButton}>
-          {isActive ? "완료" : "취소"}
-        </TodoButton> */}
-        <button onClick={handleDeleteButton}>삭제</button>
+        <button
+          onClick={() => {
+            mutation.mutate(bucket.id);
+          }}
+        >
+          삭제
+        </button>
+        {/*  <button onClick={handleDeleteButton}>삭제</button> */}
+        {/*  <button onClick={onDeleteButtonClickHandler}>삭제</button> */}
       </div>
     </div>
   );
