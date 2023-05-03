@@ -1,23 +1,20 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useQuery } from "react-query";
+import { getBucketlists } from "../../api/bucketlists";
 
 function DetailBox() {
   const params = useParams();
 
-  const filteredBucket = useSelector((state) => {
-    return state.bucketlists.filter((item) => item.id == params.id);
-  });
+  const { data } = useQuery("bucketlists", getBucketlists);
+  const [foundData, setFoundData] = useState({});
   useEffect(() => {
-    if (filteredBucket.length <= 0 || filteredBucket.length > 1) {
-      alert("올바르지 않은 접근입니다. 메인페이지로 이동합니다.");
-      navigate("/");
-    }
+    const foundItem = data.find((bucket) => bucket.id === params.id);
+    setFoundData(foundItem);
   }, []);
-
-  const bucket = filteredBucket[0];
 
   const navigate = useNavigate();
   const handleButtonClick = () => {
@@ -28,12 +25,12 @@ function DetailBox() {
     <div>
       <div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>ID : {bucket.id}</div>
+          <div>ID : {foundData.id}</div>
           <button onClick={handleButtonClick}>이전으로</button>
         </div>
-        <h1>{bucket.title}</h1>
-        <main>{bucket.contents}</main>
-        <h4>작성자: {bucket.nickname}</h4>
+        <h1>{foundData.title}</h1>
+        <main>{foundData.contents}</main>
+        <h4>작성자: {foundData.nickname}</h4>
       </div>
     </div>
   );
