@@ -5,10 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 const StyledHeader = styled.header`
   display: flex;
-  justify-content: space-between;
+  -webkit-box-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
   flex-direction: row;
-  border-bottom: 1px solid gray;
+  height: 45px;
+  background-color: rgb(255, 255, 255);
+  border-bottom: 1px solid rgb(221, 221, 221);
+  padding: 0px 12px;
 `;
 
 const StyledP = styled.p`

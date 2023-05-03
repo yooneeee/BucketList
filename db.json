@@ -1,3 +1,40 @@
 {
-  "bucketlists": []
+  "bucketlists": [
+    {
+      "title": "혼자 여행",
+      "nickname": "yoni",
+      "contents": "제주도 한 달 살기",
+      "id": "d77d18b6-fe88-468a-80c7-9ec565464d12"
+    },
+    {
+      "title": "외국어 공부",
+      "nickname": "요니",
+      "contents": "회화배워서 외국인 친구 사귀기",
+      "id": "0ae37008-b8b7-420e-a052-5ccff046de55"
+    },
+    {
+      "title": "자격증 따기",
+      "nickname": "나나",
+      "contents": "바리스타 자격증\n플로어리스트 자격증\n",
+      "id": "b069dedf-f966-4a83-92c6-e8c494cc0009"
+    },
+    {
+      "title": "스냅촬영",
+      "nickname": "유후",
+      "contents": "스냅촬영하기",
+      "id": "58f7fd1c-adf3-4fe4-8df5-8aa4b818aa72"
+    },
+    {
+      "title": "영상편집",
+      "nickname": "yoni",
+      "contents": "영상편집배우기! 포토샵도!!",
+      "id": "394862e8-3667-4d67-94cd-901d3e589d31"
+    },
+    {
+      "title": "내 공간",
+      "nickname": "하튜",
+      "contents": "내 취향이 가득 담긴 내 공간 만들기",
+      "id": "1a5c20a6-94ae-47fe-9611-ae3b5f93a923"
+    }
+  ]
 }

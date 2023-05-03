@@ -5,23 +5,14 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { deleteBucket } from "../../api/bucketlists";
 import { useQueryClient, useMutation } from "react-query";
+import Button from "../Button";
+import { BiTrash } from "react-icons/bi";
+import styled from "styled-components";
 
 function Bucket({ bucket }) {
-  // 삭제 확인 용 메시지 관리
   const CONFIRM_MESSAGE = `[삭제 확인]\n\n"${bucket.title}" 항목을 정말로 삭제하시겠습니까?\n삭제를 원치 않으시면 [취소] 버튼을 눌러주세요.`;
-
-  // hooks
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 완료, 취소를 handling하는 함수
-  //const handleSwitchButton = () => dispatch(switchTodo(todo.id));
-
-  // [삭제] 버튼 선택 시 호출되는 함수(user의 confirmation 필요)
-  /*  const handleDeleteButton = () => {
-    if (window.confirm(CONFIRM_MESSAGE)) dispatch(deleteBucket(bucket.id));
-  };
-   */
   const queryClient = useQueryClient();
   const mutation = useMutation(deleteBucket, {
     onSuccess: () => {
@@ -29,42 +20,68 @@ function Bucket({ bucket }) {
       queryClient.invalidateQueries("bucketlists");
     },
   });
-
-  /*   const onDeleteButtonClickHandler = async (id) => {
-    await axios.delete(`http://localhost:4001/bucketlists/${id}`);
-  };
- */
-  // [상세보기]를 선택하는 경우 이동하는 함수
   const handleDetailPageLinkClick = () => {
     navigate(`/lists/${bucket.id}`);
   };
 
   return (
-    <div
-      onClick={handleDetailPageLinkClick}
-      style={{ border: "1px solid green", margin: "20px" }}
-    >
-      <div>
-        <h3>{bucket.title}</h3>
-        {/*  <p onClick={handleDetailPageLinkClick}>[상세보기]</p> */}
-      </div>
-      <div height={10} />
-      <p>작성자: {bucket.nickname}</p>
-      <div height={20} />
-      {console.log(bucket.id)}
-      <div>
-        <button
-          onClick={() => {
-            if (window.confirm(CONFIRM_MESSAGE)) mutation.mutate(bucket.id);
-          }}
+    <div>
+      <BucketContainer>
+        <Button
+          size={"large"}
+          color={"white"}
+          justifyContent={"center"}
+          onClick={handleDetailPageLinkClick}
         >
-          삭제
-        </button>
-        {/*  <button onClick={handleDeleteButton}>삭제</button> */}
-        {/*  <button onClick={onDeleteButtonClickHandler}>삭제</button> */}
-      </div>
+          <Stdiv>
+            <TitleContainer>
+              <Title>{bucket.title}</Title>
+              <Button
+                size={"small"}
+                color={"green"}
+                onClick={() => {
+                  if (window.confirm(CONFIRM_MESSAGE))
+                    mutation.mutate(bucket.id);
+                }}
+              >
+                <BiTrash color="black" />
+              </Button>
+            </TitleContainer>
+            <User>작성자: {bucket.nickname}</User>
+          </Stdiv>
+        </Button>
+      </BucketContainer>
     </div>
   );
 }
 
 export default Bucket;
+
+const TitleContainer = styled.div`
+  /*  display: flex;
+  align-items: center;
+  justify-content: space-evenly; */
+  font-size: 30px;
+  width: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+`;
+const BucketContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const User = styled.div`
+  display: flex;
+  align-items: center;
+  color: gray;
+`;
+
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Stdiv = styled.div``;

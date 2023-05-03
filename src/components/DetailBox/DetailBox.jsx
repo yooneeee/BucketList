@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { getBucketlists } from "../../api/bucketlists";
+import Button from "../Button";
 
 function DetailBox() {
   const params = useParams();
@@ -18,78 +19,87 @@ function DetailBox() {
 
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate("/");
+    navigate("/lists");
   };
 
   return (
-    <div>
-      <div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>ID : {foundData.id}</div>
-          <button onClick={handleButtonClick}>이전으로</button>
-        </div>
-        <h1>{foundData.title}</h1>
-        <main>{foundData.contents}</main>
-        <h4>작성자: {foundData.nickname}</h4>
-      </div>
-    </div>
+    <St>
+      <StLayout>
+        <Stbox>
+          <Stid>
+            {/* <div>ID : {foundData.id}</div> */}
+            <h4>작성자: {foundData.nickname}</h4>
+          </Stid>
+          <div>
+            <StTitle>{foundData.title}</StTitle>
+            <StContent>{foundData.contents}</StContent>
+          </div>
+          <ButtonContainer>
+            <Button
+              size={"medium"}
+              color={"green"}
+              justifyContent={"center"}
+              onClick={handleButtonClick}
+            >
+              이전으로
+            </Button>
+          </ButtonContainer>
+        </Stbox>
+      </StLayout>
+    </St>
   );
 }
 
 export default DetailBox;
-
-const StyledDiv = styled.div`
-  background-color: #fff6e8;
-  padding: 20px;
+const StLayout = styled.div`
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const StyledTable = styled.table`
-  border: 1px solid black;
-  margin-bottom: 20px;
+const Stbox = styled.div`
+  width: 800px;
+  height: 600px;
+  border: 1px solid rgb(238, 238, 238);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 `;
 
-const StyledTh = styled.th`
-  border: 1px solid black;
-  padding: 5px;
-`;
-
-const StyledButton = styled.button`
-  width: 200px;
-  height: 50px;
-  background-color: darkslategray;
-  color: white;
-  font-weight: 700;
+const Stid = styled.div`
+  display: flex;
+  height: 80px;
+  padding: 0px 24px;
+  align-items: center;
   font-size: 17px;
-  border: 0;
-  border-radius: 13px;
-  cursor: pointer;
+  color: gray;
 `;
 
-{
-  /* <div>
-      <StyledDiv>
-        <h3>TODO 상세페이지</h3>
-        <StyledTable>
-          <tr>
-            <StyledTh>KEY</StyledTh>
-            <StyledTh>VALUE</StyledTh>
-          </tr>
-          <tr>
-            <StyledTh>ID</StyledTh>
-            <StyledTh>{bucket?.id}</StyledTh>
-          </tr>
-          <tr>
-            <StyledTh>TITLE</StyledTh>
-            <StyledTh>{bucket?.title}</StyledTh>
-          </tr>
-          <tr>
-            <StyledTh>CONTENTS</StyledTh>
-            <StyledTh>{bucket?.contents}</StyledTh>
-          </tr>
-        </StyledTable>
-        <StyledButton onClick={handleButtonClick}>
-          이전 페이지로 가기
-        </StyledButton>
-      </StyledDiv>
-    </div> */
-}
+const StTitle = styled.div`
+  display: block;
+  font-size: 40px;
+  font-weight: bold;
+  margin: 0.67em 0 0.67em 0;
+  font-weight: bold;
+`;
+
+const StContent = styled.div`
+  padding: 0px 24px;
+  font-size: 20px;
+`;
+
+const St = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

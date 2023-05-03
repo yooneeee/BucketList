@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Bucket from "../Bucket/Bucket";
 import { getBucketlists } from "../../api/bucketlists";
 import { useQuery } from "react-query";
+import styled from "styled-components";
 
 function BucketList() {
   const { isLoading, isError, data } = useQuery("bucketlists", getBucketlists);
@@ -15,8 +16,8 @@ function BucketList() {
   }
   return (
     <div>
-      <h3>BucketList</h3>
-      <div style={{ border: "1px solid black", margin: "10px" }}>
+      <H1>BucketList</H1>
+      <div>
         {data?.map((item) => {
           return <Bucket key={item.id} bucket={item} />;
         })}
@@ -26,3 +27,10 @@ function BucketList() {
 }
 
 export default BucketList;
+
+const H1 = styled.div`
+  font-size: 40px;
+  font-weight: bold;
+  margin: 10px;
+  color: #76b474;
+`;
