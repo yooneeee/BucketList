@@ -46,7 +46,7 @@ function Bucket({ bucket }) {
     >
       <div>
         <h3>{bucket.title}</h3>
-        {/* <p onClick={handleDetailPageLinkClick}>[상세보기]</p> */}
+        {/*  <p onClick={handleDetailPageLinkClick}>[상세보기]</p> */}
       </div>
       <div height={10} />
       <p>작성자: {bucket.nickname}</p>
@@ -55,7 +55,7 @@ function Bucket({ bucket }) {
       <div>
         <button
           onClick={() => {
-            mutation.mutate(bucket.id);
+            if (window.confirm(CONFIRM_MESSAGE)) mutation.mutate(bucket.id);
           }}
         >
           삭제
