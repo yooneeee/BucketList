@@ -44,7 +44,7 @@ function Bucket({ bucket }) {
                     mutation.mutate(bucket.id);
                 }}
               >
-                <BiTrash color="black" />
+                <BiTrash color="white" />
               </Button>
             </TitleContainer>
             <User>작성자: {bucket.nickname}</User>
@@ -58,9 +58,6 @@ function Bucket({ bucket }) {
 export default Bucket;
 
 const TitleContainer = styled.div`
-  /*  display: flex;
-  align-items: center;
-  justify-content: space-evenly; */
   font-size: 30px;
   width: 100vh;
   display: flex;
@@ -77,11 +74,14 @@ const User = styled.div`
   display: flex;
   align-items: center;
   color: gray;
+  font-size: 15px;
+  margin-left: 30px;
 `;
 
 const Title = styled.div`
   display: flex;
   align-items: center;
+  margin: 20px;
 `;
 
 const Stdiv = styled.div``;

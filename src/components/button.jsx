@@ -16,9 +16,9 @@ function Button({ size, color, onClick, children, justifyContent }) {
       case "large":
         return `width: 95%; height: 120px; font-size: 25px `;
       case "medium":
-        return `width: 100px; height: 40px; 20px `;
+        return `width: 100px; height: 40px;  `;
       case "small":
-        return `width: 20px; height: 35px; 10px`;
+        return `width: 20px; height: 35px; `;
     }
   };
 
@@ -34,7 +34,7 @@ function Button({ size, color, onClick, children, justifyContent }) {
     font-weight: bold;
     cursor: pointer;
     &:active {
-      filter: brightness(60%);
+      filter: brightness(70%);
     }
   `;
   return <Button onClick={onClick}>{children}</Button>;

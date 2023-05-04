@@ -8,11 +8,11 @@ function BucketList() {
   const { isLoading, isError, data } = useQuery("bucketlists", getBucketlists);
 
   if (isLoading) {
-    return <h1>로딩중입니다...!</h1>;
+    return <h1>Loading...!</h1>;
   }
 
   if (isError) {
-    return <h1>오류가 발생하였습니다...!</h1>;
+    return <h1>Error...!</h1>;
   }
   return (
     <div>
